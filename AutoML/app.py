@@ -15,7 +15,8 @@ st.set_page_config(page_title='Dummy Auto ML',layout='wide')
 #---------------------------------#
 # Model building
 def build_model(df):
-
+    X=df.iloc[:,:-1]
+    Y=df.iloc[:,-1]
     st.markdown('**1.2. Dataset dimension**')
     st.write('X')
     st.info(X.shape)
@@ -29,7 +30,7 @@ def build_model(df):
     st.info(Y.name)
 
     # Build the autoML model
-    X_train, X_test, Y_train, Y_test = train_test_split(X, Y,test_size = split_size,random_state = seed_number)
+    X_train, X_test, Y_train, Y_test = train_test_split(X, Y,test_size = split_size*0.01,random_state = seed_number)
     reg = LazyRegressor(verbose=0,ignore_warnings=False, custom_metric=None)
     models_train,predictions_train = reg.fit(X_train, X_train, Y_train, Y_train)
     models_test,predictions_test = reg.fit(X_train, X_test, Y_train, Y_test)
